@@ -1,0 +1,43 @@
+<div class="w-screen h-screen bg-gray-100 relative">
+    <section class="absolute w-full h-full">
+        <img class="hidden absolute min-w-56 max-w-64 left-0 bottom-0 sm:block" src="/assets/Icons/login-bg-left.svg"
+            alt="">
+        <img class="hidden absolute min-w-56 max-w-64 right-0 bottom-0 sm:block" src="/assets/Icons/login-bg-rigth.svg"
+            alt="">
+    </section>
+    <section class="relative max-w-72 flex flex-col m-auto">
+        <div class="flex flex-col items-center justify-center">
+            <header class="pt-6 pb-2 flex justify-center">
+                <img class="w-56"
+                    src="/assets/Logos/Trello/Attribution/RGB/SVG/trello-logo-gradient-blue-attribution_rgb.svg"
+                    alt="Logo">
+            </header>
+            <div class="bg-white border-2 rounded-md shadow-md mb-2 w-full">
+                <input class="px-2 py-2 rounded-sm text-sm" type="email" placeholder="Introduce tu correo electrónico">
+            </div>
+            <button
+                class="border-2 w-full rounded-md text-sm p-2 bg-blue-700 text-white hover:bg-blue-600 transition-colors mb-4">Continuar</button>
+            <div class="w-full">
+                <p class="text-center text-gray-500 pb-3 text-sm">O continúa con:</p>
+                @for (login of logins; track login) {
+                    <div class="flex items-center justify-center gap-4 border border-gray-400 w-full p-2 rounded-md mb-4 cursor-pointer transition-colors hover:bg-slate-200">
+                        <span>
+                            <img class="w-7" [src]="login.src" alt="Google">
+                        </span>
+                        <button class="font-semibold">{{login.title}}</button>
+                    </div>
+                }
+            </div>
+        </div>
+        <footer class="w-full">
+            <div class="flex items-center justify-center gap-20 border-b-2 border-gray-300 w-auto pb-4">
+                <a class="text-sm font-light text-blue-700 cursor-pointer hover:underline">¿No puedes iniciar <br> sesión?</a>
+                <a class="text-sm font-light text-blue-700 cursor-pointer hover:underline">Crear una <br>cuenta</a>
+            </div>
+            <div class="w-full flex flex-col items-center justify-center my-4">
+                <img class="w-44" src="/assets/Logos/Atlassian/Atlassian Logo Horizontal/SVG/horizontal-logo-gradient-neutral-atlassian.svg" alt="">
+                <p class="text-sm text-gray-400">Este sitio web es solo para fines educativos y no es el sitio web oficial de Trello</p>
+            </div>
+        </footer>
+    </section>
+</div>
