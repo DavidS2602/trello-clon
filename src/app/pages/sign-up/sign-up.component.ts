@@ -1,19 +1,20 @@
 import { Component } from '@angular/core';
 import { RouterLinkWithHref } from '@angular/router';
 
-interface Login {
+interface SignUp {
   title: string;
   src: string;
 }
 
+
 @Component({
-  selector: 'app-login',
+  selector: 'app-sign-up',
   standalone: true,
   imports: [RouterLinkWithHref],
-  templateUrl: './login.component.html'
+  templateUrl: './sign-up.component.html'
 })
-export default class LoginComponent {
-  logins: Login[] = [
+export default class SignUpComponent {
+  SignUp: SignUp[] = [
     {
       title: 'Google',
       src:'/assets/Icons/icons8-google.svg'
