@@ -18,6 +18,10 @@ export const routes: Routes = [
                 path: 'sign-up',
                 loadComponent: () => import('./pages/sign-up/sign-up.component')
             }
-        ]
+        ],
     },
+    {
+        path: 'boards',
+        loadComponent: () => import('./pages/boards/boards.component')
+    }
 ];
