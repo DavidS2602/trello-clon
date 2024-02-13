@@ -1,4 +1,4 @@
-<nav class="bg-sky-700 border-gray-200 px-6 shadow-md">
+<nav class=" border-gray-200 px-6 shadow-md">
     <div class="flex flex-wrap justify-between items-center">
         <div class="flex items-center">
             <a routerLink="/">
@@ -6,19 +6,29 @@
                     src="/assets/Logos/Trello/Attribution/RGB/SVG/trello-logo-gradient-neutral-attribution_rgb.svg"
                     alt="logo" />
             </a>
-            <div class="flex items-center">
+            <div class="flex items-center p-2">
                 <ul class="flex items-center space-x-2 text-sm font-medium">
                     <li>
-                        <a
-                            class="block py-3 px-4 text-white cursor-pointer hover:bg-blue-700 transition-colors">Workspaces</a>
+                        <a (click)="isWorkSpaceOpen = !isWorkSpaceOpen" cdkOverlayOrigin
+                            #workSpaceOverlay="cdkOverlayOrigin"
+                            class="block py-3 px-4 cursor-pointer rounded-sm hover:bg-gray-200 transition-colors">Espacios
+                            de trabajo</a>
                     </li>
                     <li>
-                        <a
-                            class="block py-3 px-4 text-white cursor-pointer hover:bg-blue-700 transition-colors">Recent</a>
+                        <a (click)="isRecentOpen = !isRecentOpen" cdkOverlayOrigin #recentOverlay="cdkOverlayOrigin"
+                            class="block py-3 px-4 cursor-pointer rounded-sm hover:bg-gray-200 transition-colors">Reciente</a>
                     </li>
                     <li>
-                        <a
-                            class="block py-3 px-4 text-white cursor-pointer hover:bg-blue-700 transition-colors">Create</a>
+                        <a (click)="isMarketOpen = !isMarketOpen" cdkOverlayOrigin #marketOverlay="cdkOverlayOrigin"
+                            class="block py-3 px-4 cursor-pointer rounded-sm hover:bg-gray-200 transition-colors">Marcado</a>
+                    </li>
+                    <li>
+                        <a (click)="isTemplatesOpen = !isTemplatesOpen" cdkOverlayOrigin
+                            #templatesOverlay="cdkOverlayOrigin"
+                            class="block py-3 px-4 cursor-pointer rounded-sm hover:bg-gray-200 transition-colors">Plantillas</a>
+                    </li>
+                    <li>
+                        <a class="border px-3 py-2 rounded-md bg-blue-700 text-gray-50">Crear</a>
                     </li>
                 </ul>
             </div>
@@ -32,6 +42,51 @@
         </div>
     </div>
 </nav>
+
+<!--WorkSpace menu-->
+<ng-template cdkConnectedOverlay [cdkConnectedOverlayOrigin]="workSpaceOverlay"
+    [cdkConnectedOverlayOpen]="isWorkSpaceOpen">
+    <div class="flex px-4 py-3 flex-col z-50 my-4 text-base list-none bg-white divide-y-2 shadow-lg rounded-md">
+        <div>
+            <h1 class="text-gray-800 text-[11px]">Tus espacios de trabajo</h1>
+            <div class="flex hover:bg-gray-100 cursor-pointer transition-colors rounded-md">
+                <div class="p-2 gap-2 flex items-center">
+                    <span
+                        class="border px-3 py-2 rounded-md bg-[radial-gradient(ellipse_at_top_left,_var(--tw-gradient-stops))] from-violet-400 via-purple-300 to-purple-200">E</span>
+                    <h1 class="font-semibold text-sm">Espacio de trabajo de Trello</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+</ng-template>
+
+<!--Recent menu-->
+<ng-template cdkConnectedOverlay [cdkConnectedOverlayOrigin]="recentOverlay" [cdkConnectedOverlayOpen]="isRecentOpen">
+    <div class="flex px-4 py-3 flex-col z-50 my-4 text-base list-none bg-white divide-y-2 shadow-lg rounded-md">
+        <div class="flex flex-col">
+            @for (workspace of workSpaces; track workspace) {
+            <div class="flex gap-2 hover:bg-gray-100 transition-colors cursor-pointer pr-24 rounded-md">
+                <div class="flex items-center gap-2 p-2 rounded-md">
+                    <span class="border px-4 py-4">
+                        <img [src]="workspace.img" alt="">
+                    </span>
+                    <div>
+                        <h1 class="font-semibold text-[15px]">{{workspace.title}}</h1>
+                        <p class="font-light text-sm">{{workspace.subtitle}}</p>
+                    </div>
+                </div>
+            </div>
+            }
+        </div>
+    </div>
+</ng-template>
+
+<!--Market menu-->
+<ng-template cdkConnectedOverlay [cdkConnectedOverlayOrigin]="marketOverlay" [cdkConnectedOverlayOpen]="isMarketOpen">
+    <h1>MarketOverlay</h1>
+</ng-template>
+
+<!--Profile menu-->
 <ng-template cdkConnectedOverlay [cdkConnectedOverlayOrigin]="menuOverlay" [cdkConnectedOverlayOpen]="isOpen">
     <div class="flex flex-col z-50 my-4 text-base list-none bg-white rounded divide-y-2  shadow">
         <div class="py-3 px-4 flex flex-col gap-2">
