@@ -1,8 +1,8 @@
 <app-navbar></app-navbar>
-<div class="flex h-screen pt-[60px] overflow-auto">
-    <div class="hidden menu-container text-sm p-4 border-2 w-1/5 h-full sm:block">
+<div class="flex h-screen pt-[64px] overflow-auto lg:px-32">
+    <div class="hidden menu-container text-sm p-2 border-2 w-1/4 h-full sm:block">
         <ul>
-            <div class="font-semibold rounded-lg p-2 cursor-pointer hover:bg-gray-200 transition-colors">
+            <div class="font-semibold rounded-lg p-2 cursor-pointer pt-2 hover:bg-gray-200 transition-colors">
                 <div class="flex gap-2 items-center">
                     <span>
                         <img class="w-5" src="/assets/Icons/table-filled.svg" alt="">
@@ -32,11 +32,46 @@
                     </li>
                 </div>
             </div>
+            <span class="border flex"></span>
         </ul>
+
+        <cdk-accordion>
+            <cdk-accordion-item #accordionMenu="cdkAccordionItem">
+                <div class="flex items-center hover:bg-gray-300 rounded-md transition-colors">
+                    <div class="flex items-center p-2">
+                        <span
+                            class="border w-1/2 h-1/2 text-center px-3 py-2 rounded-md bg-[radial-gradient(ellipse_at_top_left,_var(--tw-gradient-stops))] from-violet-400 via-purple-300 to-purple-200">E</span>
+                        <button type="button" class="font-semibold" (click)="accordionMenu.toggle()">Espacio de trabajo
+                            de Trello</button>
+                    </div>
+                </div>
+                <div [style.display]="accordionMenu.expanded ? '' : 'none'">
+                    <div>
+                        @for (workspace of workspaceItem; track workspace) {
+                            <div class="cursor-pointer hover:bg-gray-200 transition-colors p-2 rounded-lg">
+                                <div class="flex items-center ml-4 gap-4">
+                                    <span class="flex-shrink-0">
+                                        <img class="w-5" [src]="workspace.icon" alt="">
+                                    </span>
+                                    <div class="flex flex-col flex-grow-0 items-center justify-center font-light">
+                                        <div class="flex w-full items-center gap-2">
+                                            <p class="">{{workspace.text}}</p>
+                                            <span>
+                                                <img class="w-5" [src]="workspace.SecondIcon" alt="">
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </cdk-accordion-item>
+        </cdk-accordion>
     </div>
     <div class="p-10 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-        <div class="border rounded-md p-2 h-1/3">Pendientes personales</div>
-        <div class="border rounded-md p-2 h-1/3">Pendientes personales</div>
-        <div class="border rounded-md p-2 h-1/3">Pendientes personales</div>
+        <div class="border bg-blue-400 rounded-md p-2 h-1/3">Pendientes personales</div>
+        <div class="border bg-red-500 rounded-md p-2 h-1/3">Pendientes personales</div>
+        <div class="border bg-yellow-500 rounded-md p-2 h-1/3">Pendientes personales</div>
     </div>
 </div>
