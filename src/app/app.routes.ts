@@ -23,5 +23,9 @@ export const routes: Routes = [
     {
         path: 'boards',
         loadComponent: () => import('./pages/boards/boards.component')
+    },
+    {
+        path: 'board',
+        loadComponent: () => import('./pages/board/board.component')
     }
 ];
