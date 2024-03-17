@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { NavbarComponent } from '@app/components/navbar/navbar.component';
 import { CdkDragDrop, moveItemInArray, transferArrayItem, CdkDropList, DragDropModule, CdkDropListGroup } from '@angular/cdk/drag-drop';
-import { ToDo } from 'src/models/todo.model';
+import { Column, ToDo } from 'src/models/todo.model';
 
 @Component({
   selector: 'app-board',
@@ -20,42 +20,53 @@ import { ToDo } from 'src/models/todo.model';
 })
 export default class BoardComponent {
 
-  todos: ToDo[] = [
+  columns:Column[] = [
     {
-      id: '1',
-      title: 'Make dishes'
+      title: 'To Do',
+      todos: [
+        {
+          id: '1',
+          title: 'Make dishes'
+        },
+        {
+          id: '2',
+          title: 'Complete Launch'
+        },
+        {
+          id: '3',
+          title: 'Write Blog'
+        }
+      ]
     },
     {
-      id: '2',
-      title: 'Complete Launch'
+      title: 'Doing',
+      todos: [
+        {
+          id: '5',
+          title: 'Watch Angular path in Platzi'
+        },
+        {
+          id: '6',
+          title: 'Create a new project'
+        }
+      ]
     },
     {
-      id: '3',
-      title: 'Write Blog'
-    },
-  ];
+      title: 'Done',
+      todos: [
+        {
+          id: '7',
+          title: 'Create a new project'
+        },
+        {
+          id: '8',
+          title: 'Create a new project'
+        }
+      ]
 
-  doing: ToDo[] = [
-    {
-      id: '5',
-      title: 'Watch Angular path in Platzi'
-    },
-    {
-      id: '6',
-      title: 'Create a new project'
     }
-  ];
+  ]
 
-  done: ToDo[] = [
-    {
-      id: '7',
-      title: 'Prueba 7'
-    },
-    {
-      id: '8',
-      title: 'Prueba 8'
-    }
-  ];
 
 
   drop(event: CdkDragDrop<ToDo[]>) {
@@ -69,5 +80,11 @@ export default class BoardComponent {
         event.currentIndex
       )
     }
+  }
+  addColumn() {
+    this.columns.push({
+      title: 'New Column',
+      todos: []
+    })
   }
 }
