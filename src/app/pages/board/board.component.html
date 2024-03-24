@@ -7,19 +7,30 @@
             </div>
             <div class="flex grow items-start w-full h-full min-w-full overflow-x-scroll" cdkDropListGroup>
                 @for (column of columns; track column) {
-                <div class="rounded bg-gray-200 w-72 p-2 mr-3 shrink-0">
+                <div class="rounded-2xl bg-gray-200 w-72 p-2 mr-3 shrink-0">
                     <div class="flex justify-between py-1">
                         <h3 class="text-sm font-bold ml-2">{{column.title}}</h3>
                     </div>
-
                     <div class="text-sm mt-2" cdkDropList (cdkDropListDropped)="drop($event)"
                         [cdkDropListData]="column.todos">
                         @for (todo of column.todos; track todo) {
-                        <div cdkDrag
-                            class="bg-white shadow p-2 rounded mt-2 border-b border-x-gray-300 cursor-pointer hover:bg-gray-400">
+                        <div cdkDrag (click)="openDialog(todo)"
+                            class="bg-white shadow p-2 rounded-lg mt-2 border-b border-x-gray-300 cursor-pointer hover:bg-gray-400 transition-colors">
                             {{todo.title}}
                         </div>
                         }
+                    </div>
+                    <div class="flex items-center gap-2 py-[4px] hover:bg-gray-300 cursor-pointer mt-2 rounded-lg transition-colors">
+                        <div class="pl-2 text-gray-500">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="24" viewBox="0 0 24 24"
+                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-plus">
+                                <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                <path d="M12 5l0 14" />
+                                <path d="M5 12l14 0" />
+                            </svg>
+                        </div>
+                        <p (click)="addTodo(column.id)" class="text-sm font-semibold text-gray-500">Añada una tarjeta</p>
                     </div>
                 </div>
                 }

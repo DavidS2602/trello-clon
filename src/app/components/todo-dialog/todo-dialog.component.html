@@ -1,0 +1,55 @@
+<div class="bg-gray-100 border-none flex p-2">
+    <div class="h-full">
+        <header>
+            <div>
+                <span></span>
+                <h1 class="text-2xl font-semibold text-gray-600">{{todo.title}} </h1>
+                <p class="ml-6 pt-2 text-gray-500">en la lista <span class="underline">Pendientes</span></p>
+            </div>
+        </header>
+        <div class="ml-6 pt-6">
+            <p class="text-md font-semibold text-gray-500">Notificaciones.</p>
+            <div class="Seguir flex items-center gap-2 bg-gray-200 py-2 px-1 w-[85px] rounded-sm hover:bg-gray-300 transition-colors cursor-pointer text-gray-500">
+                <span><img src="/assets/Icons/follow.svg" alt="" class="w-4"></span>
+                <p class="font-semibold text-sm">Seguir</p>
+            </div>
+        </div>
+        <div class="pt-4">
+            <div class="flex items-center gap-2 pb-2">
+                <span> <img src="/assets/Icons/align-justified.svg" alt="" class="w-4"></span>
+                <p class="font-semibold text-md text-gray-600">Descripción</p>
+            </div>
+            <textarea name="" id="" cols="30" rows="10" class="bg-gray-200 ml-6">Añadir una descripción más detallada</textarea>
+        </div>
+        <div class="flex space-x-2 ml-6">
+            <button type="button" (click)="closeWithRta(true)">Si</button>
+            <button type="button" (click)="closeWithRta(false)">No</button>
+        </div>
+        <div class="flex flex-1 justify-between">
+            <div class="flex items-center gap-2">
+                <span><img src="/assets/Icons/activity.svg" alt="" class="w-4"></span>
+                <p class="text-gray-700 font-semibold">Actividad</p>
+            </div>
+            <div>
+                <button class="px-2 py-1 bg-gray-300 rounded-sm hover:bg-gray-300 transition-colors cursor-pointer font-semibold text-sm">Mostrar detalles</button>
+            </div>
+        </div>
+    </div>
+    <aside class="w-full pl-2">
+        <header class="text-[10px] font-semibold">
+            <p>Añadir a la tarjeta</p>
+        </header>
+        @for (action of actions; track action) {
+            <ul>
+                <li >
+                    <div class="bg-gray-300 rounded-sm hover:bg-gray-300 transition-colors cursor-pointer my-2">
+                        <div class="flex px-2 py-1 items-center gap-2 font-semibold text-sm">
+                            <span><img [src]="action.img" alt="" class="w-4"></span>
+                            <p>{{action.action}}</p>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+        }
+    </aside>
+</div>

@@ -11,10 +11,6 @@ module.exports = {
       'lg': '1024px',
       'xl': '1280px',
     },
-    fontSize: {
-      sm: '14px',
-      md: '16px',
-    }
   },
   plugins: [],
 }
