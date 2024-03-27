@@ -2,9 +2,7 @@
     <div class="flex flex-wrap justify-between items-center">
         <div class="flex items-center">
             <a routerLink="/">
-                <img loading="lazy" class="w-16 mr-8"
-                    src="/assets/Icons/trello-icon.svg"
-                    alt="logo" />
+                <img loading="lazy" class="w-16 mr-8" src="/assets/Icons/trello-icon.svg" alt="logo" />
             </a>
             <div class="flex items-center p-2">
                 <ul class="flex items-center space-x-2 text-sm font-medium">
@@ -45,7 +43,7 @@
 
 <!--WorkSpace menu-->
 <ng-template cdkConnectedOverlay [cdkConnectedOverlayOrigin]="workSpaceOverlay"
-    [cdkConnectedOverlayOpen]="isWorkSpaceOpen">
+    [cdkConnectedOverlayOpen]="isWorkSpaceOpen" (overlayOutsideClick)="isWorkSpaceOpen = !isWorkSpaceOpen">
     <div class="flex px-4 py-3 flex-col z-50 my-4 text-base list-none bg-white divide-y-2 shadow-lg rounded-md">
         <div>
             <h1 class="text-gray-800 text-[11px]">Tus espacios de trabajo</h1>
@@ -61,7 +59,8 @@
 </ng-template>
 
 <!--Recent menu-->
-<ng-template cdkConnectedOverlay [cdkConnectedOverlayOrigin]="recentOverlay" [cdkConnectedOverlayOpen]="isRecentOpen">
+<ng-template cdkConnectedOverlay [cdkConnectedOverlayOrigin]="recentOverlay" [cdkConnectedOverlayOpen]="isRecentOpen"
+    (overlayOutsideClick)="isRecentOpen = !isRecentOpen">
     <div class="flex px-4 py-3 flex-col z-50 my-4 text-base list-none bg-white divide-y-2 shadow-lg rounded-md">
         <div class="flex flex-col">
             @for (workspace of workSpaces; track workspace) {
@@ -82,12 +81,14 @@
 </ng-template>
 
 <!--Market menu-->
-<ng-template cdkConnectedOverlay [cdkConnectedOverlayOrigin]="marketOverlay" [cdkConnectedOverlayOpen]="isMarketOpen">
+<ng-template cdkConnectedOverlay [cdkConnectedOverlayOrigin]="marketOverlay" [cdkConnectedOverlayOpen]="isMarketOpen"
+    (overlayOutsideClick)="isMarketOpen = !isMarketOpen">
     <h1>MarketOverlay</h1>
 </ng-template>
 
 <!--Profile menu-->
-<ng-template cdkConnectedOverlay [cdkConnectedOverlayOrigin]="menuOverlay" [cdkConnectedOverlayOpen]="isOpen">
+<ng-template cdkConnectedOverlay [cdkConnectedOverlayOrigin]="menuOverlay" [cdkConnectedOverlayOpen]="isOpen"
+    (overlayOutsideClick)="isOpen = !isOpen">
     <div class="flex flex-col z-50 my-4 text-base list-none bg-white rounded divide-y-2  shadow">
         <div class="py-3 px-4 flex flex-col gap-2">
             <div class="font-bold text-[10px] text-gray-500">
