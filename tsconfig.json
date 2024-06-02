@@ -34,6 +34,9 @@
       "@components/*": [
         "src/app/components/*"
       ],
+      "@auth/*": [
+        "src/app/auth/*"
+      ],
     }
   },
   "angularCompilerOptions": {
