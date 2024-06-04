@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { NavbarComponent } from '@components/navbar/navbar.component';
 import {CdkAccordionModule} from '@angular/cdk/accordion';
+import { RouterLinkWithHref } from '@angular/router';
 
 interface Workspace {
   icon: string;
@@ -10,7 +11,7 @@ interface Workspace {
 @Component({
   selector: 'app-boards',
   standalone: true,
-  imports: [NavbarComponent, CdkAccordionModule],
+  imports: [NavbarComponent, CdkAccordionModule, RouterLinkWithHref],
   templateUrl: './boards.component.html'
 })
 export default class BoardsComponent {

@@ -1,5 +1,9 @@
+import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
-import { RouterLinkWithHref } from '@angular/router';
+import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
+import { Router, RouterLinkWithHref } from '@angular/router';
+import { RequestStatus } from '@app/auth/interfaces/request-status';
+import { AuthService } from '@app/auth/services/auth.service';
 
 interface Login {
   title: string;
@@ -9,10 +13,54 @@ interface Login {
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [RouterLinkWithHref],
+  imports: [RouterLinkWithHref, ReactiveFormsModule, CommonModule],
   templateUrl: './login.component.html'
 })
 export default class LoginComponent {
+  //*Rules email validation
+  public emailPattern: string = "^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$";
+
+  constructor(
+    private fb: FormBuilder,
+    private authService: AuthService,
+    private router: Router,
+  ) { }
+
+  //*Form
+  public loginForm = this.fb.group({
+    email: ['davids260202@pm.me', [Validators.required, Validators.pattern(this.emailPattern)]],
+    password: ['12345678', [Validators.required, Validators.minLength(6)]]
+  });
+
+  status: RequestStatus = 'init';
+
+  doLogin() {
+    if (this.loginForm.valid) {
+      this.status = 'loading';
+      const formValue = this.loginForm.value;
+      const email = formValue.email as string;  // Casting to string
+      const password = formValue.password as string;  // Casting to string
+
+      if (email && password) {
+
+        this.authService.login(email, password).subscribe({
+          next: () => {
+            this.status = 'success';
+            this.router.navigateByUrl('/boards');
+          },
+          error: (error) => {
+            console.error('Login error:', error);  // Log the error response
+            this.status = 'failed';
+          }
+        });
+      } else {
+        this.status = 'failed';
+      }
+    } else {
+      this.loginForm.markAllAsTouched();
+    }
+  }
+
   logins: Login[] = [
     {
       title: 'Google',
@@ -30,5 +78,5 @@ export default class LoginComponent {
       title: 'Slack',
       src:'/assets/Icons/icons8-slack.svg'
     },
-  ]
+  ];
 }
