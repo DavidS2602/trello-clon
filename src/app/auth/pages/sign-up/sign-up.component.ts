@@ -51,6 +51,11 @@ export default class SignUpComponent {
     private router: Router,
   ) { }
 
+  public formUser = this.fb.group({
+    email: ['', [Validators.required, Validators.pattern(this.emailPattern)]],
+  })
+
+
   public registerForm = this.fb.group({
     name: ['', [Validators.required, Validators.pattern(this.firstNameAndLastnamePattern)]],
     email: ['', [Validators.required, Validators.pattern(this.emailPattern)]],
@@ -63,7 +68,8 @@ export default class SignUpComponent {
   });
 
   status: RequestStatus = 'init';
-
+  statusUser: RequestStatus = 'init';
+  showRegister = false
 
   getErrorMessage(field: string): string {
     const control = this.registerForm.get(field);
@@ -119,6 +125,38 @@ export default class SignUpComponent {
       }
     }
   }
+
+  validateUser() {
+    if (this.formUser.valid) {
+      this.statusUser = 'loading';
+      const email = this.formUser.get('email')?.value as string;
+      if (email) {
+        this.authService.isAvailable(email)
+        .subscribe({
+          next: (rta) => {
+            this.statusUser = 'success';
+            if (rta.isAvailable) {
+              this.showRegister = true;
+              this.registerForm.controls.email.setValue(email);
+            } else {
+              this.router.navigateByUrl('/auth/login'), {
+                queryParams: {
+                  email: email
+                }
+              };
+            }
+          },
+          error: (error) => {
+            console.error('Error:', error);
+            this.statusUser = 'failed';
+          }
+        });
+      }
+    } else {
+      this.formUser.markAllAsTouched();
+    }
+  }
+
 
   SignUp: SignUp[] = [
     {

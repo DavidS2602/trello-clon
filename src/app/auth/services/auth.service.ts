@@ -24,4 +24,8 @@ export class AuthService {
     });
   }
 
+  isAvailable(email: string) {
+    return this.httpClient.post<{isAvailable: boolean}>(`${this.apiUrl}/api/v1/auth/is-available`, {email});
+  }
+
 }

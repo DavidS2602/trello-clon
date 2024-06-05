@@ -1,9 +1,10 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
-import { Router, RouterLinkWithHref } from '@angular/router';
+import { ActivatedRoute, Router, RouterLinkWithHref } from '@angular/router';
 import { RequestStatus } from '@app/auth/interfaces/request-status';
 import { AuthService } from '@app/auth/services/auth.service';
+import { get } from 'http';
 
 interface Login {
   title: string;
@@ -24,12 +25,20 @@ export default class LoginComponent {
     private fb: FormBuilder,
     private authService: AuthService,
     private router: Router,
-  ) { }
+    private route: ActivatedRoute
+  ) {
+    this.route.queryParams.subscribe(params => {
+      const email = params['email']
+      if (email) {
+        this.loginForm.get('email')?.setValue(email);
+      }
+    });
+  }
 
   //*Form
   public loginForm = this.fb.group({
-    email: ['davids260202@pm.me', [Validators.required, Validators.pattern(this.emailPattern)]],
-    password: ['12345678', [Validators.required, Validators.minLength(6)]]
+    email: ['', [Validators.required, Validators.pattern(this.emailPattern)]],
+    password: ['d12345678', [Validators.required, Validators.minLength(6)]]
   });
 
   status: RequestStatus = 'init';

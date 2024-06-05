@@ -1,24 +1,46 @@
-<div class="flex flex-col items-center">
-    <p class="pb-4 font-semibold text-[16px]">Regístrate para continuar</p>
-    <form action="" class="w-full" [formGroup]="registerForm" (ngSubmit)="register()">
-      <div *ngFor="let input of inputFields">
-        <div class="bg-white border-2 rounded-md shadow-md w-full mb-2">
-          <input
-            class="px-2 py-2 rounded-sm text-sm w-full"
-            [type]="input.type"
-            [placeholder]="input.placeholder"
-            [formControlName]="input.name"
-          >
-        </div>
-        <div *ngIf="registerForm.get(input.name)?.invalid && (registerForm.get(input.name)?.dirty || registerForm.get(input.name)?.touched)" class="text-red-500 text-sm">
-          {{ getErrorMessage(input.name) }}
-        </div>
+@if (!showRegister) {
+  <h1 class="text-center font-bold py-2">Ingresa tu correo</h1>
+  <form action="" [formGroup]="formUser" (ngSubmit)="validateUser()">
+    <div class="bg-white border-2 rounded-md shadow-md w-full mb-2">
+      <input
+        class="px-2 py-2 rounded-sm text-sm w-full"
+        type="email"
+        placeholder="Ingresa un correo"
+        formControlName="email"
+      >
+    </div>
+    <div *ngIf="formUser.get('email')?.invalid && (formUser.get('email')?.dirty || formUser.get('email')?.touched)" class="text-red-500 text-sm">
+      {{ getErrorMessage('email') }}
+    </div>
+    <button
+            class="border-2 w-full rounded-md text-sm p-2 bg-blue-700 text-white hover:bg-blue-600 transition-colors mb-4">
+            Continuar
+        </button>
+  </form>
+}
+@if (showRegister) {
+  <p class="pb-4 font-semibold text-[16px]">Regístrate para continuar</p>
+  <form action="" class="w-full" [formGroup]="registerForm" (ngSubmit)="register()">
+    <div *ngFor="let input of inputFields">
+      <div class="bg-white border-2 rounded-md shadow-md w-full mb-2">
+        <input
+          class="px-2 py-2 rounded-sm text-sm w-full"
+          [type]="input.type"
+          [placeholder]="input.placeholder"
+          [formControlName]="input.name"
+        >
       </div>
-      <button
-          class="border-2 w-full rounded-md text-sm p-2 bg-blue-700 text-white hover:bg-blue-600 transition-colors mb-4">
-          Registrarse
-      </button>
-    </form>
+      <div *ngIf="registerForm.get(input.name)?.invalid && (registerForm.get(input.name)?.dirty || registerForm.get(input.name)?.touched)" class="text-red-500 text-sm">
+        {{ getErrorMessage(input.name) }}
+      </div>
+    </div>
+    <button
+        class="border-2 w-full rounded-md text-sm p-2 bg-blue-700 text-white hover:bg-blue-600 transition-colors mb-4">
+        Registrarse
+    </button>
+  </form>
+}
+<div class="flex flex-col items-center">
 
     <div class="w-full">
       <p class="text-center text-gray-500 pb-3 text-sm">O continúa con:</p>
