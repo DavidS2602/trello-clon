@@ -110,11 +110,11 @@ export default class SignUpComponent {
       const email = formValue.email as string;
       const password = formValue.password as string;
       if (name && email && password) {
-        this.authService.register(name, email, password)
+        this.authService.registerAndLogin(name, email, password)
         .subscribe({
           next: () => {
             this.status = 'success';
-            this.router.navigateByUrl('/auth/login');
+            this.router.navigateByUrl('/boards');
             console.log('Register success')
           },
           error: (error) => {
