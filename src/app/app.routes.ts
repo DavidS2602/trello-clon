@@ -29,6 +29,10 @@ export const routes: Routes = [
         loadComponent: () => import('./auth/pages/sign-up/sign-up.component')
       },
       {
+        path: 'new-password',
+        loadComponent: () => import('./auth/pages/new-password/new-password.component')
+      },
+      {
         path: '**',
         redirectTo: 'login'
       }
