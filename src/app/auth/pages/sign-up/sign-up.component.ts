@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+
 import { Component } from '@angular/core';
 import { AbstractControl, FormBuilder, ReactiveFormsModule, ValidationErrors, Validators } from '@angular/forms';
 import { Router, RouterLinkWithHref } from '@angular/router';
@@ -21,7 +21,7 @@ interface SignUp {
 @Component({
   selector: 'app-sign-up',
   standalone: true,
-  imports: [RouterLinkWithHref, ReactiveFormsModule, CommonModule],
+  imports: [RouterLinkWithHref, ReactiveFormsModule],
   templateUrl: './sign-up.component.html'
 })
 export default class SignUpComponent {
