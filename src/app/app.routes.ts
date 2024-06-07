@@ -1,5 +1,6 @@
 import type { Routes } from '@angular/router';
 import { LayoutComponent } from './auth/pages/layout/layout.component';
+import { authGuard } from './auth/guards/auth.guard';
 
 export const routes: Routes = [
   {
@@ -40,10 +41,12 @@ export const routes: Routes = [
   },
   {
     path: 'boards',
+    canActivate: [authGuard], // This is the guard
     loadComponent: () => import('./pages/boards/boards.component')
   },
   {
     path: 'board',
+    canActivate: [authGuard], // This is the guard
     loadComponent: () => import('./pages/board/board.component')
   }
 ];
