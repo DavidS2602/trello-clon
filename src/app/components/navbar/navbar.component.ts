@@ -1,6 +1,7 @@
-import { Component } from '@angular/core';
-import { RouterLinkWithHref } from '@angular/router';
+import { Component, inject } from '@angular/core';
+import { Router, RouterLinkWithHref } from '@angular/router';
 import { OverlayModule } from '@angular/cdk/overlay';
+import { AuthService } from '@app/auth/services/auth.service';
 
 interface WorkSpaces {
   img?: string;
@@ -20,6 +21,17 @@ export class NavbarComponent {
   isRecentOpen = false
   isMarketOpen = false
   isTemplatesOpen = false
+
+  constructor(
+    private authService: AuthService,
+    private router: Router
+  ) { }
+
+  logout() {
+    this.authService.logout()
+    this.router.navigateByUrl('/auth/login')
+  }
+
 
   workSpaces: WorkSpaces[] = [
     {
