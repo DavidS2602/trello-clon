@@ -1,6 +1,7 @@
 import type { Routes } from '@angular/router';
 import { LayoutComponent } from './auth/pages/layout/layout.component';
 import { authGuard } from './auth/guards/auth.guard';
+import { redirectGuard } from './auth/guards/redirect.guard';
 
 export const routes: Routes = [
   {
@@ -9,6 +10,7 @@ export const routes: Routes = [
     pathMatch: 'full',
   },
   {
+    canActivate: [redirectGuard],
     path: 'auth',
     component: LayoutComponent,
     children: [
