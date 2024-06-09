@@ -92,10 +92,10 @@
         <h1>CUENTA</h1>
       </div>
       <div class="flex gap-2">
-        <img class="w-8 h-8 rounded-full text-gray-500" src="/assets/Icons/PhUser.svg" alt="user photo" />
+        <img class="w-8 h-8 rounded-full text-gray-500" [src]="user?.avatar" alt="user photo" />
         <div class="flex flex-col">
-          <p class="block text-sm text-gray-900 ">Bonnie Green</p>
-          <p class="block text-sm font-medium text-gray-500 truncate ">email</p>
+          <p class="block text-sm text-gray-900 ">{{user?.name}}</p>
+          <p class="block text-sm font-medium text-gray-500 truncate ">{{user?.email}}</p>
         </div>
       </div>
     </div>

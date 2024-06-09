@@ -4,6 +4,7 @@ import { environment } from '@app/environments/environment';
 import { TokenService } from '@app/services/token.service';
 import { switchMap, tap } from 'rxjs';
 import { ResponseLogin } from '../interfaces/auth.model';
+import { User } from '../interfaces/user';
 
 @Injectable({
   providedIn: 'root'
@@ -49,6 +50,15 @@ export class AuthService {
 
   recovery(email: string) {
     return this.httpClient.post(`${this.apiUrl}/api/v1/auth/recovery`, {email});
+  }
+
+  getProfile() {
+    const token = this.tokenService.getToken();
+    return this.httpClient.get<User>(`${this.apiUrl}/api/v1/auth/profile`, {
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    });
   }
 
   changePassword(token: string, newPassword: string) {

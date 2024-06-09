@@ -1,7 +1,8 @@
-import { Component, inject } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { Router, RouterLinkWithHref } from '@angular/router';
 import { OverlayModule } from '@angular/cdk/overlay';
 import { AuthService } from '@app/auth/services/auth.service';
+import { User } from '@app/auth/interfaces/user';
 
 interface WorkSpaces {
   img?: string;
@@ -15,7 +16,7 @@ interface WorkSpaces {
   imports: [RouterLinkWithHref, OverlayModule],
   templateUrl: './navbar.component.html'
 })
-export class NavbarComponent {
+export class NavbarComponent implements OnInit{
   isOpen = false
   isWorkSpaceOpen = false
   isRecentOpen = false
@@ -26,11 +27,19 @@ export class NavbarComponent {
     private authService: AuthService,
     private router: Router
   ) { }
+  ngOnInit(): void {
+    this.authService.getProfile().subscribe(user => {
+      this.user = user
+    })
+  }
+
+  user: User | null = null
 
   logout() {
     this.authService.logout()
     this.router.navigateByUrl('/auth/login')
   }
+
 
 
   workSpaces: WorkSpaces[] = [
