@@ -38,7 +38,7 @@ export default class LoginComponent {
   //*Form
   public loginForm = this.fb.group({
     email: ['', [Validators.required, Validators.pattern(this.emailPattern)]],
-    password: ['d12345678', [Validators.required, Validators.minLength(6)]]
+    password: ['', [Validators.required, Validators.minLength(6)]]
   });
 
   status: RequestStatus = 'init';
