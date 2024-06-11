@@ -43,12 +43,13 @@ export const routes: Routes = [
   },
   {
     path: 'boards',
-    canActivate: [authGuard], // This is the guard
-    loadComponent: () => import('./pages/boards/boards.component')
-  },
-  {
-    path: 'board',
-    canActivate: [authGuard], // This is the guard
-    loadComponent: () => import('./pages/board/board.component')
+    canActivate: [authGuard], // Este es el guard
+    loadComponent: () => import('./pages/boards/boards.component'),
+    children: [
+      {
+        path: ':id',
+        loadComponent: () => import('./pages/board/board.component')
+      }
+    ]
   }
 ];

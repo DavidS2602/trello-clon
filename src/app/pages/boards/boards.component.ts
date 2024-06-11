@@ -1,7 +1,9 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { NavbarComponent } from '@components/navbar/navbar.component';
 import {CdkAccordionModule} from '@angular/cdk/accordion';
 import { RouterLinkWithHref } from '@angular/router';
+import { MeService } from '@app/services/me.service';
+import { Board } from '@app/interfaces/board';
 
 interface Workspace {
   icon: string;
@@ -14,7 +16,14 @@ interface Workspace {
   imports: [NavbarComponent, CdkAccordionModule, RouterLinkWithHref],
   templateUrl: './boards.component.html'
 })
-export default class BoardsComponent {
+export default class BoardsComponent implements OnInit{
+  //*Inject services.
+  constructor(
+    private meService: MeService
+  ) {}
+
+  boards: Board[] = [];
+
   workspaceItem : Workspace[] = [
     {
       icon: '/assets/Icons/table-filled.svg',
@@ -38,4 +47,14 @@ export default class BoardsComponent {
       text: 'Configuración'
     }
   ]
+
+  ngOnInit(): void {
+    this.getMeBoards();
+  }
+
+  getMeBoards() {
+    this.meService.getMeBoards().subscribe((boards) => {
+      this.boards = boards;
+    })
+  }
 }
