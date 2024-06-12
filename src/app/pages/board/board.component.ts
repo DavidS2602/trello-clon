@@ -1,13 +1,23 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { NavbarComponent } from '@app/components/navbar/navbar.component';
 import { CdkDragDrop, moveItemInArray, transferArrayItem, CdkDropList, DragDropModule, CdkDropListGroup } from '@angular/cdk/drag-drop';
-import { Column, ToDo } from 'src/models/todo.model';
 import { Dialog } from '@angular/cdk/dialog';
 import { TodoDialogComponent } from '@app/components/todo-dialog/todo-dialog.component';
+import { BoardsService } from '@app/services/boards.service';
+import { ActivatedRoute } from '@angular/router';
+import { Board } from '@app/interfaces/board';
+import { Card } from '@app/interfaces/card';
+import { CommonModule } from '@angular/common';
 @Component({
   selector: 'app-board',
   standalone: true,
-  imports: [DragDropModule, NavbarComponent, CdkDropListGroup, CdkDropList],
+  imports: [
+    DragDropModule,
+    NavbarComponent,
+    CdkDropListGroup,
+    CdkDropList,
+    CommonModule,
+  ],
   templateUrl: './board.component.html',
   styles: [`
     .cdk-drop-list-dragging .cdk-drag {
@@ -19,63 +29,25 @@ import { TodoDialogComponent } from '@app/components/todo-dialog/todo-dialog.com
     }
   `]
 })
-export default class BoardComponent {
+export default class BoardComponent implements OnInit {
 
-  columns:Column[] = [
-    {
-      id: 1,
-      title: 'To Do',
-      todos: [
-        {
-          id: 1,
-          title: 'Make dishes'
-        },
-        {
-          id: 2,
-          title: 'Complete Launch'
-        },
-        {
-          id: 3,
-          title: 'Write Blog'
-        }
-      ]
-    },
-    {
-      id: 2,
-      title: 'Doing',
-      todos: [
-        {
-          id: 5,
-          title: 'Watch Angular path in Platzi'
-        },
-        {
-          id: 6,
-          title: 'Create a new project'
-        }
-      ]
-    },
-    {
-      id: 3,
-      title: 'Done',
-      todos: [
-        {
-          id: 7,
-          title: 'Create a new project'
-        },
-        {
-          id: 8,
-          title: 'Create a new project'
-        }
-      ]
-
-    }
-  ]
+  board: Board | null = null;
 
   constructor(
-    private dialog: Dialog
+    private dialog: Dialog,
+    private boardService: BoardsService,
+    private route: ActivatedRoute,
   ) {}
+  ngOnInit(): void {
+    this.route.paramMap.subscribe(params => {
+      const id = params.get('id');
+      if (id) {
+        this.getBoard(id);
+      }
+    })
+  }
 
-  drop(event: CdkDragDrop<ToDo[]>) {
+  drop(event: CdkDragDrop<Card[]>) {
     if (event.previousContainer === event.container) {
       moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
     } else {
@@ -89,39 +61,32 @@ export default class BoardComponent {
   }
 
 
-  nextColumnId: number = this.columns.length + 1;
+
   addColumn() {
-    this.columns.push({
-      id: this.nextColumnId++,
-      title: 'New Column',
-      todos: []
-    })
+    //this.columns.push({
+      //id: this.nextColumnId++,
+      //title: 'New Column',
+      //todos: []
+    //})
   }
 
-  addTodo(columnId: number) {
-    const newTodoId = Math.max(...this.columns.flatMap(column => column.todos.map(todo => todo.id))) + 1;
-    const newTodo: ToDo = {
-      id: newTodoId,
-      title: 'New Todo',
-      editing: true
-    };
-
-    // Encontrar la columna correspondiente y agregar el nuevo todo
-    const column = this.columns.find(c => c.id === columnId);
-    if (column) {
-      column.todos.push(newTodo);
-    }
-  }
-  openDialog(todo: ToDo) {
+  openDialog(card: Card) {
     const dialogRef = this.dialog.open(TodoDialogComponent, {
       width: '500px',
       height: '500px',
       data: {
-        todo: todo
+        card: card
       }
     })
     dialogRef.closed.subscribe(result => {
       console.log(result)
     });
+  }
+
+  private getBoard(id: string) {
+    this.boardService.getBoard(id)
+      .subscribe((board) => {
+        this.board = board;
+      });
   }
 }

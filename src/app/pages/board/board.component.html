@@ -1,41 +1,28 @@
 <div class="flex flex-col w-full h-screen">
-    <app-navbar></app-navbar>
-    <div class="w-screen grow overflow-x-hidden bg-sky-600 px-4 pb-4 pt-[90px] h-full">
-        <div class="flex flex-col h-full">
-            <div>
-                <h2 class="text-xl font-bold text-white my-4">Demo Board</h2>
+  <app-navbar></app-navbar>
+  <div class="w-screen grow overflow-x-hidden bg-sky-600 px-4 pb-4 pt-[90px] h-full">
+    <div class="flex flex-col h-full">
+      <div>
+        <h2 class="text-xl font-bold text-white my-4">{{ board?.title }}</h2>
+      </div>
+      <div class="flex grow items-start w-full h-full overflow-x-scroll" cdkDropListGroup>
+        <div class="rounded bg-gray-200 w-72 p-2 mr-3 shrink-0" *ngFor="let list of board?.list">
+          <div class="flex justify-between py-1">
+            <h3 class="text-sm font-bold ml-2">{{ list.title }}</h3>
+          </div>
+          <div class="text-sm mt-2 min-h-[2.5rem]" cdkDropList (cdkDropListDropped)="drop($event)" [cdkDropListData]="list.cards">
+            <div
+              (click)="openDialog(card)"
+              *ngFor="let card of list.cards"
+              cdkDrag
+              class="bg-white shadow p-2 rounded mt-2 border-b border-x-gray-300 cursor-pointer hover:bg-gray-400"
+            >
+              {{ card.title }}
             </div>
-            <div class="flex grow items-start w-full h-full min-w-full overflow-x-scroll" cdkDropListGroup>
-                @for (column of columns; track column) {
-                <div class="rounded-2xl bg-gray-200 w-72 p-2 mr-3 shrink-0">
-                    <div class="flex justify-between py-1">
-                        <h3 class="text-sm font-bold ml-2">{{column.title}}</h3>
-                    </div>
-                    <div class="text-sm mt-2" cdkDropList (cdkDropListDropped)="drop($event)"
-                        [cdkDropListData]="column.todos">
-                        @for (todo of column.todos; track todo) {
-                        <div cdkDrag (click)="openDialog(todo)"
-                            class="bg-white shadow p-2 rounded-lg mt-2 border-b border-x-gray-300 cursor-pointer hover:bg-gray-400 transition-colors">
-                            {{todo.title}}
-                        </div>
-                        }
-                    </div>
-                    <div class="flex items-center gap-2 py-[4px] hover:bg-gray-300 cursor-pointer mt-2 rounded-lg transition-colors">
-                        <div class="pl-2 text-gray-500">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="24" viewBox="0 0 24 24"
-                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-plus">
-                                <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                                <path d="M12 5l0 14" />
-                                <path d="M5 12l14 0" />
-                            </svg>
-                        </div>
-                        <p (click)="addTodo(column.id)" class="text-sm font-semibold text-gray-500">Añada una tarjeta</p>
-                    </div>
-                </div>
-                }
-                <button class="shrink-0" (click)="addColumn()">Add Column</button>
-            </div>
+          </div>
         </div>
+        <button color="light" class="shrink-0" (click)="addColumn()">Add Column</button>
+      </div>
     </div>
+  </div>
 </div>

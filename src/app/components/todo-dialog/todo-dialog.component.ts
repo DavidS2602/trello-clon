@@ -1,6 +1,7 @@
 import { Component, Inject } from '@angular/core';
 import { DialogRef, DIALOG_DATA } from '@angular/cdk/dialog';
 import { ToDo } from 'src/models/todo.model';
+import { Card } from '@app/interfaces/card';
 
 interface actions {
   img: string;
@@ -12,7 +13,7 @@ interface OutputData {
 }
 
 interface InputData {
-  todo: ToDo;
+  card: Card;
 }
 
 @Component({
@@ -25,13 +26,13 @@ interface InputData {
 
 export class TodoDialogComponent {
 
-  todo!: ToDo
+  card!: Card
 
   constructor(
     private dialogRef: DialogRef<OutputData>,
     @Inject(DIALOG_DATA) private data: InputData
   ) {
-    this.todo = data.todo;
+    this.card = data.card;
   }
   ngOnInit(): void { }
 

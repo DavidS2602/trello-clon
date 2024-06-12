@@ -3,7 +3,7 @@
         <header>
             <div>
                 <span></span>
-                <h1 class="text-2xl font-semibold text-gray-600">{{todo.title}} </h1>
+                <h1 class="text-2xl font-semibold text-gray-600">{{card.title}} </h1>
                 <p class="ml-6 pt-2 text-gray-500">en la lista <span class="underline">Pendientes</span></p>
             </div>
         </header>
@@ -17,9 +17,11 @@
         <div class="pt-4">
             <div class="flex items-center gap-2 pb-2">
                 <span> <img src="/assets/Icons/align-justified.svg" alt="" class="w-4"></span>
-                <p class="font-semibold text-md text-gray-600">Descripción</p>
+                <div class="flex flex-col">
+                  <p class="font-semibold text-md text-gray-800">Descripción</p>
+                  <p class="text-sm text-gray-500">{{ card.description }}</p>
+                </div>
             </div>
-            <textarea name="" id="" cols="30" rows="10" class="bg-gray-200 ml-6">Añadir una descripción más detallada</textarea>
         </div>
         <div class="flex space-x-2 ml-6">
             <button type="button" (click)="closeWithRta(true)">Si</button>
