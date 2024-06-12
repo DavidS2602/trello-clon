@@ -44,8 +44,12 @@ export const routes: Routes = [
   {
     path: 'boards',
     canActivate: [authGuard], // Este es el guard
-    loadComponent: () => import('./pages/boards/boards.component'),
+    loadComponent: () => import('./pages/layout/layout.component'),
     children: [
+      {
+        path: '',
+        loadComponent: () => import('./pages/boards/boards.component')
+      },
       {
         path: ':id',
         loadComponent: () => import('./pages/board/board.component')
