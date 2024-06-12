@@ -4,6 +4,7 @@ import {CdkAccordionModule} from '@angular/cdk/accordion';
 import { RouterLinkWithHref } from '@angular/router';
 import { MeService } from '@app/services/me.service';
 import { Board } from '@app/interfaces/board';
+import { CardColorComponent } from '@app/shared/components/card-color/card-color.component';
 
 interface Workspace {
   icon: string;
@@ -13,7 +14,7 @@ interface Workspace {
 @Component({
   selector: 'app-boards',
   standalone: true,
-  imports: [NavbarComponent, CdkAccordionModule, RouterLinkWithHref],
+  imports: [NavbarComponent, CdkAccordionModule, RouterLinkWithHref, CardColorComponent],
   templateUrl: './boards.component.html'
 })
 export default class BoardsComponent implements OnInit{
