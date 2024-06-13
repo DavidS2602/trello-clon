@@ -7,7 +7,8 @@ import { BoardsService } from '@app/services/boards.service';
 import { ActivatedRoute } from '@angular/router';
 import { Board } from '@app/interfaces/board';
 import { Card } from '@app/interfaces/card';
-import { CommonModule } from '@angular/common';
+import { CardService } from '@app/services/card.service';
+
 @Component({
   selector: 'app-board',
   standalone: true,
@@ -15,9 +16,8 @@ import { CommonModule } from '@angular/common';
     DragDropModule,
     NavbarComponent,
     CdkDropListGroup,
-    CdkDropList,
-    CommonModule,
-  ],
+    CdkDropList
+],
   templateUrl: './board.component.html',
   styles: [`
     .cdk-drop-list-dragging .cdk-drag {
@@ -37,6 +37,7 @@ export default class BoardComponent implements OnInit {
     private dialog: Dialog,
     private boardService: BoardsService,
     private route: ActivatedRoute,
+    private cardService: CardService
   ) {}
   ngOnInit(): void {
     this.route.paramMap.subscribe(params => {
@@ -58,6 +59,10 @@ export default class BoardComponent implements OnInit {
         event.currentIndex
       )
     }
+    const position = this.boardService.getPosition(event.container.data, event.currentIndex)
+    const card = event.container.data[event.currentIndex]
+    const listId = event.container.id
+    this.updateCard(card, position, listId)
   }
 
 
@@ -87,6 +92,13 @@ export default class BoardComponent implements OnInit {
     this.boardService.getBoard(id)
       .subscribe((board) => {
         this.board = board;
+      });
+  }
+
+  private updateCard(card: Card, position: number, listId: string | number) {
+    this.cardService.update(card.id, { position, listId })
+      .subscribe((cardUpdated) => {
+        console.log(cardUpdated);
       });
   }
 }
