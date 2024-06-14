@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, input } from '@angular/core';
 import { NavbarComponent } from '@app/components/navbar/navbar.component';
 import { CdkDragDrop, moveItemInArray, transferArrayItem, CdkDropList, DragDropModule, CdkDropListGroup } from '@angular/cdk/drag-drop';
 import { Dialog } from '@angular/cdk/dialog';
@@ -8,6 +8,8 @@ import { ActivatedRoute } from '@angular/router';
 import { Board } from '@app/interfaces/board';
 import { Card } from '@app/interfaces/card';
 import { CardService } from '@app/services/card.service';
+import { List } from '@app/interfaces/list';
+import { FormBuilder, FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-board',
@@ -16,7 +18,8 @@ import { CardService } from '@app/services/card.service';
     DragDropModule,
     NavbarComponent,
     CdkDropListGroup,
-    CdkDropList
+    CdkDropList,
+    ReactiveFormsModule,
 ],
   templateUrl: './board.component.html',
   styles: [`
@@ -32,13 +35,17 @@ import { CardService } from '@app/services/card.service';
 export default class BoardComponent implements OnInit {
 
   board: Board | null = null;
-
+  inputCard = new FormControl<string>('', {
+    nonNullable: true,
+    validators: [Validators.required]
+  })
   constructor(
     private dialog: Dialog,
     private boardService: BoardsService,
     private route: ActivatedRoute,
-    private cardService: CardService
+    private cardService: CardService,
   ) {}
+
   ngOnInit(): void {
     this.route.paramMap.subscribe(params => {
       const id = params.get('id');
@@ -100,5 +107,43 @@ export default class BoardComponent implements OnInit {
       .subscribe((cardUpdated) => {
         console.log(cardUpdated);
       });
+  }
+
+  openFormCard(list: List) {
+    list.showCardForm = !list.showCardForm
+    if (this.board?.lists) {
+      this.board.lists = this.board.lists.map(l => {
+        if (l.id === list.id) {
+          return {
+            ...l,
+            showCardForm: true
+          }
+        }
+        return {
+          ...l,
+          showCardForm: false
+        }
+      })
+    }
+  }
+
+  createCard(list: List) {
+    const title = this.inputCard.value
+    if (this.board) {
+      this.cardService.create({
+        title,
+        listId: list.id,
+        boardId: this.board.id,
+        position: this.boardService.getPositionNewCard(list.cards)
+      }).subscribe((card) => {
+        list.cards.push(card)
+        this.inputCard.setValue('')
+        list.showCardForm = false
+      })
+    }
+  }
+
+  closeCardForm(list: List) {
+    list.showCardForm = false
   }
 }

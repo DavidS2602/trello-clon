@@ -36,4 +36,5 @@ export class BoardFormComponent {
       this.boardForm.markAllAsTouched();
     }
   }
+
 }

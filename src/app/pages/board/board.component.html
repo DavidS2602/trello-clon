@@ -9,14 +9,29 @@
           <div class="flex justify-between py-1">
             <h3 class="text-sm font-bold ml-2">{{ list.title }}</h3>
           </div>
-          <div class="text-sm mt-2 min-h-[2.5rem]" [id]="list.id" cdkDropList (cdkDropListDropped)="drop($event)"
+          <div class="text-sm mt-2 items-center" [id]="list.id" cdkDropList (cdkDropListDropped)="drop($event)"
             [cdkDropListData]="list.cards">
             @for (card of list.cards; track card) {
               <div (click)="openDialog(card)" cdkDrag
                 class="bg-white shadow p-2 rounded mt-2 border-b border-x-gray-300 cursor-pointer hover:bg-gray-400">
                 {{ card.title }}
               </div>
-            }
+              }
+                <div>
+                  @if (!list.showCardForm) {
+                    <button (click)="openFormCard(list)" class="mt-2">Agregar card</button>
+                  } @else {
+                    <div class="w-full">
+                      <textarea [formControl]="inputCard" class="w-full mt-2 rounded-sm"></textarea>
+                        <div class="flex space-x-2">
+                          <button class="bg-green-400 p-2 rounded-sm hover:bg-green-500" (click)="createCard(list)">Crear</button>
+                          <button (click)="closeCardForm(list)">
+                            <img src="assets/Icons/delete.svg" alt="">
+                          </button>
+                        </div>
+                    </div>
+                  }
+                </div>
           </div>
         </div>
       }
