@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { BoardsService } from '@app/services/boards.service';
@@ -10,7 +10,7 @@ import { BoardsService } from '@app/services/boards.service';
   templateUrl: './board-form.component.html'
 })
 export class BoardFormComponent {
-
+  @Output() closeOverlay = new EventEmitter<boolean>();
   constructor(
     private fb: FormBuilder,
     private boardService : BoardsService,
@@ -28,7 +28,7 @@ export class BoardFormComponent {
       if (title && backgroundColor !== undefined) {
         this.boardService.createBoard(title, backgroundColor)
           .subscribe(board => {
-            console.log(board)
+            this.closeOverlay.next(false);
             this.router.navigateByUrl(`/boards/${board.id}`);
           });
       }

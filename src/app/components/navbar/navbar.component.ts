@@ -46,6 +46,10 @@ export class NavbarComponent implements OnInit{
     this.router.navigateByUrl('/auth/login')
   }
 
+  close(event: boolean) {
+    this.isCreateBoardOpen = event
+  }
+
 
 
   workSpaces: WorkSpaces[] = [
