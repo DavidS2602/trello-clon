@@ -1,4 +1,4 @@
-<div class="flex h-screen pt-[64px] overflow-auto lg:px-32">
+<div class="flex pt-[64px] overflow-auto lg:px-32">
   <div class="hidden menu-container text-sm p-2 border-2 w-1/4 h-full sm:block">
     <ul>
       <div class="font-semibold rounded-lg p-2 cursor-pointer pt-2 hover:bg-gray-200 transition-colors">
@@ -68,7 +68,7 @@
       </cdk-accordion-item>
     </cdk-accordion>
   </div>
-  <div class="p-10 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+  <div class="p-10 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
     @for (board of boards; track board) {
     <a [routerLink]="['/boards', board.id]"> <!--Acá es donde quiero que me lleve a la ruta-->
       <app-card-color [color]="board.backgroundColor">
