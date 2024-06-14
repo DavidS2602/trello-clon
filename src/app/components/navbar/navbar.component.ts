@@ -3,6 +3,7 @@ import { Router, RouterLinkWithHref } from '@angular/router';
 import { OverlayModule } from '@angular/cdk/overlay';
 import { AuthService } from '@app/auth/services/auth.service';
 import { User } from '@app/auth/interfaces/user';
+import { BoardFormComponent } from '../board-form/board-form.component';
 
 interface WorkSpaces {
   img?: string;
@@ -13,7 +14,11 @@ interface WorkSpaces {
 @Component({
   selector: 'app-navbar',
   standalone: true,
-  imports: [RouterLinkWithHref, OverlayModule],
+  imports: [
+    RouterLinkWithHref,
+    OverlayModule,
+    BoardFormComponent,
+  ],
   templateUrl: './navbar.component.html'
 })
 export class NavbarComponent implements OnInit{
@@ -22,6 +27,7 @@ export class NavbarComponent implements OnInit{
   isRecentOpen = false
   isMarketOpen = false
   isTemplatesOpen = false
+  isCreateBoardOpen = false
 
   constructor(
     private authService: AuthService,

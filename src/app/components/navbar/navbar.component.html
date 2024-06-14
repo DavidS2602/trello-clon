@@ -20,12 +20,25 @@
               class="block py-3 px-4 cursor-pointer rounded-sm hover:bg-gray-200 transition-colors">Marcado</a>
           </li>
           <li>
-            <a (click)="isTemplatesOpen = !isTemplatesOpen" cdkOverlayOrigin #templatesOverlay="cdkOverlayOrigin"
-              class="block py-3 px-4 cursor-pointer rounded-sm hover:bg-gray-200 transition-colors">Plantillas</a>
+            <a
+              (click)="isTemplatesOpen = !isTemplatesOpen" cdkOverlayOrigin #templatesOverlay="cdkOverlayOrigin"
+              class="block py-3 px-4 cursor-pointer rounded-sm hover:bg-gray-200 transition-colors">
+              Plantillas
+            </a>
           </li>
           <li>
-            <a class="border px-3 py-2 rounded-md bg-blue-700 text-gray-50 cursor-pointer">Crear</a>
+            <button
+              (click)="isCreateBoardOpen = !isCreateBoardOpen"
+              cdkOverlayOrigin
+              #createBoardOverlay="cdkOverlayOrigin"
+              class="border px-3 py-2 rounded-md cursor-pointer hover:bg-gray-200">
+              <div class="flex space-x-2 text-left items-center">
+                <span>Create</span>
+                <img src="assets/Icons/chevron-down.svg" alt="">
+              </div>
+            </button>
           </li>
+
         </ul>
       </div>
     </div>
@@ -43,7 +56,12 @@
   [cdkConnectedOverlayOpen]="isWorkSpaceOpen" (overlayOutsideClick)="isWorkSpaceOpen = !isWorkSpaceOpen">
   <div class="flex px-4 py-3 flex-col z-50 my-4 text-base list-none bg-white divide-y-2 shadow-lg rounded-md">
     <div>
-      <h1 class="text-gray-800 text-[11px]">Tus espacios de trabajo</h1>
+      <div class="flex items-center justify-between">
+        <h1 class="text-gray-800 text-[11px]">Tus espacios de trabajo</h1>
+        <button class="hover:bg-gray-400 rounded-sm" (click)="isWorkSpaceOpen = !isWorkSpaceOpen">
+          <img src="assets/Icons/delete.svg" class="w-4" alt="">
+        </button>
+      </div>
       <div class="flex hover:bg-gray-100 cursor-pointer transition-colors rounded-md">
         <div class="p-2 gap-2 flex items-center">
           <span
@@ -80,7 +98,9 @@
 <!--Market menu-->
 <ng-template cdkConnectedOverlay [cdkConnectedOverlayOrigin]="marketOverlay" [cdkConnectedOverlayOpen]="isMarketOpen"
   (overlayOutsideClick)="isMarketOpen = !isMarketOpen">
-  <h1>MarketOverlay</h1>
+  <div class="flex px-4 py-3 flex-col z-50 my-4 text-base list-none bg-white divide-y-2 shadow-lg rounded-md">
+    <h1>MarketOverlay</h1>
+  </div>
 </ng-template>
 
 <!--Profile menu-->
@@ -160,6 +180,26 @@
     </div>
     <div class="flex px-4 py-3 text-sm text-gray-700">
       <button (click)="logout()">Cerrar Sesión</button>
+    </div>
+  </div>
+</ng-template>
+
+<!--Create board menu-->
+<ng-template
+  cdkConnectedOverlay
+  [cdkConnectedOverlayOrigin]="createBoardOverlay"
+  [cdkConnectedOverlayOpen]="isCreateBoardOpen"
+  (overlayOutsideClick)="isCreateBoardOpen = !isCreateBoardOpen"
+  >
+  <div class="flex px-4 w-60 py-3 flex-col z-50 my-4 text-base list-none bg-white divide-y-2 shadow-lg rounded-md">
+    <div class="flex items-center justify-between">
+      <h1 class="text-gray-800 text-normal">Crear un nuevo board</h1>
+      <button class="hover:bg-gray-400 rounded-sm" (click)="isCreateBoardOpen = !isCreateBoardOpen">
+        <img src="assets/Icons/delete.svg" class="w-4" alt="">
+      </button>
+    </div>
+    <div class="py-3 flex justify-between">
+      <app-board-form />
     </div>
   </div>
 </ng-template>

@@ -20,6 +20,17 @@ export class BoardsService {
     });
   }
 
+  createBoard(title: string, backgroundColor: string) {
+    return this.httpClient.post<Board>(`${this.apiUrl}/api/v1/boards`, {
+      title,
+      backgroundColor
+    }, {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem('token')}`
+      }
+    });
+  }
+
   getPosition(cards: Card[], currentIndex: number) {
     if (cards.length === 1) {
       return this.bufferSpace
