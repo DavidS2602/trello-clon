@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { environment } from '@app/environments/environment';
 import { Board } from '@app/interfaces/board';
 import { Card } from '@app/interfaces/card';
+import { List } from '@app/interfaces/list';
 
 @Injectable({
   providedIn: 'root'
@@ -52,7 +53,7 @@ export class BoardsService {
     return 0
   }
 
-  getPositionNewCard(cards: Card[]) {
+  getPositionNewItem(cards: Card[] | List[]) {
     if (cards.length === 0) {
       return this.bufferSpace
     }

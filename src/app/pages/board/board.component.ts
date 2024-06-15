@@ -10,6 +10,7 @@ import { Card } from '@app/interfaces/card';
 import { CardService } from '@app/services/card.service';
 import { List } from '@app/interfaces/list';
 import { FormBuilder, FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
+import { ListsService } from '@app/services/lists.service';
 
 @Component({
   selector: 'app-board',
@@ -39,11 +40,19 @@ export default class BoardComponent implements OnInit {
     nonNullable: true,
     validators: [Validators.required]
   })
+  inputList = new FormControl<string>('', {
+    nonNullable: true,
+    validators: [Validators.required]
+  })
+  showListForm = false
+
+  //*Add dependencies
   constructor(
     private dialog: Dialog,
     private boardService: BoardsService,
     private route: ActivatedRoute,
     private cardService: CardService,
+    private listService: ListsService,
   ) {}
 
   ngOnInit(): void {
@@ -74,12 +83,22 @@ export default class BoardComponent implements OnInit {
 
 
 
-  addColumn() {
-    //this.columns.push({
-      //id: this.nextColumnId++,
-      //title: 'New Column',
-      //todos: []
-    //})
+  addList() {
+    const title = this.inputList.value
+    if (this.board) {
+      this.listService.create({
+        title,
+        boardId: this.board.id,
+        position: this.boardService.getPositionNewItem(this.board.lists)
+      }).subscribe((list) => {
+        this.board?.lists.push({
+          ...list,
+          cards: [],
+        })
+        this.showListForm = true
+        this.inputList.setValue('')
+      })
+    }
   }
 
   openDialog(card: Card) {
@@ -134,7 +153,7 @@ export default class BoardComponent implements OnInit {
         title,
         listId: list.id,
         boardId: this.board.id,
-        position: this.boardService.getPositionNewCard(list.cards)
+        position: this.boardService.getPositionNewItem(list.cards)
       }).subscribe((card) => {
         list.cards.push(card)
         this.inputCard.setValue('')

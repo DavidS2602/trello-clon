@@ -35,7 +35,23 @@
           </div>
         </div>
       }
-      <button color="light" class="shrink-0" (click)="addColumn()">Add Column</button>
+      @if (!showListForm) {
+        <div class="shrink-0">
+          <button color="light" (click)="showListForm = !showListForm" class="p-2 bg-gray-300 rounded-md w-72">
+            Añadir lista
+          </button>
+        </div>
+      } @else {
+        <div class="w-72">
+          <textarea [formControl]="inputList" class="w-full mt-2 rounded-sm"></textarea>
+            <div class="flex space-x-2">
+              <button class="bg-green-400 p-2 rounded-sm hover:bg-green-500" (click)="addList()">Crear</button>
+              <button (click)="showListForm = !showListForm">
+                <img src="assets/Icons/delete.svg" alt="">
+              </button>
+            </div>
+        </div>
+      }
     </div>
   </div>
 </div>
