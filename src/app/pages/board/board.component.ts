@@ -1,4 +1,4 @@
-import { Component, OnInit, input } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { NavbarComponent } from '@app/components/navbar/navbar.component';
 import { CdkDragDrop, moveItemInArray, transferArrayItem, CdkDropList, DragDropModule, CdkDropListGroup } from '@angular/cdk/drag-drop';
 import { Dialog } from '@angular/cdk/dialog';
@@ -9,7 +9,7 @@ import { Board } from '@app/interfaces/board';
 import { Card } from '@app/interfaces/card';
 import { CardService } from '@app/services/card.service';
 import { List } from '@app/interfaces/list';
-import { FormBuilder, FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ListsService } from '@app/services/lists.service';
 
 @Component({
@@ -33,8 +33,8 @@ import { ListsService } from '@app/services/lists.service';
     }
   `]
 })
-export default class BoardComponent implements OnInit {
 
+export default class BoardComponent implements OnInit {
   board: Board | null = null;
   inputCard = new FormControl<string>('', {
     nonNullable: true,
